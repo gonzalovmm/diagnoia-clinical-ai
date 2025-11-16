@@ -11,7 +11,7 @@ NEO4J_USER = "neo4j"
 NEO4J_PASSWORD = "anA8t6UbVakpXHq28uvWp4H4HfTkx3QYLnk8XYAOs4M"
 
 OLLAMA_URL = "http://localhost:11434"
-OLLAMA_MODEL = "tinyllama"   # modelo liviano
+OLLAMA_MODEL = "llama3.2:3b"   # modelo liviano
 
 graph = Neo4jGraph(url=NEO4J_URI, username=NEO4J_USER, password=NEO4J_PASSWORD)
 llm = ChatOllama(base_url=OLLAMA_URL, model=OLLAMA_MODEL, temperature=0.0)
