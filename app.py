@@ -6,11 +6,18 @@ from langchain_community.graphs import Neo4jGraph
 from langchain_community.chat_models import ChatOllama
 
 # === CONFIGURACIÓN ===
-NEO4J_URI = "neo4j+s://4d237a1f.databases.neo4j.io"
-NEO4J_USER = "neo4j"
-NEO4J_PASSWORD = "anA8t6UbVakpXHq28uvWp4H4HfTkx3QYLnk8XYAOs4M"   # tu contraseña Aura
-OLLAMA_URL = "http://localhost:11434"
-OLLAMA_MODEL = "llama3.2:3b"
+import os
+
+NEO4J_URI = os.getenv("NEO4J_URI")
+NEO4J_USER = os.getenv("NEO4J_USER")
+NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
+
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2:3b")
+
+if not all([NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD]):
+    raise RuntimeError("Faltan variables de entorno para Neo4j")
+
 # =====================
 
 # 1) Conexiones
@@ -21,7 +28,7 @@ llm = ChatOllama(base_url=OLLAMA_URL, model=OLLAMA_MODEL, temperature=0.0)
 print("✅ Conectado a Ollama\n")
 
 
-# 2) Retrievers (consultas Cypher) — adaptados al esquema que pegaste
+# 2) Retrievers (consultas Cypher) 
 
 def q_listar_pacientes():
     q = """
@@ -73,7 +80,7 @@ def q_contexto(pac_id: str):
 
 
 def q_dx(pac_id: str):
-    # Diagnóstico según el activador de reglas que pegaste
+    # Diagnóstico según el activador de reglas en Neo4j
     q = """
     MATCH (p:FrameInstance {name:$pacId})-[:TIENE_DIAGNOSTICO]->(dx:FrameInstance)
     OPTIONAL MATCH (dx)-[:ASOCIA]->(e:FrameInstance)
