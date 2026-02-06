@@ -89,3 +89,9 @@ El sistema está compuesto por los siguientes módulos:
 
 Este sistema **no reemplaza el diagnóstico médico profesional**.  
 Se trata de un proyecto académico orientado a la experimentación y al aprendizaje.
+
+---
+
+## Autor
+
+Gonzalo Van Megroot
