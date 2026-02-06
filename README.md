@@ -1,56 +1,91 @@
-# DiagnOIA  
-Sistema Clínico Inteligente basado en Reglas, Grafos y Modelos de Lenguaje
+# DiagnoIA – Sistema Clínico Inteligente (Proyecto Académico)
 
-DiagnOIA es un asistente clínico académico desarrollado como parte del Proyecto Integrador.  
-Combina un grafo semántico en **Neo4j**, un motor de reglas difusas, una interfaz en **Streamlit** y un LLM local (**Ollama**) para responder consultas clínicas, listar pacientes y priorizar casos según riesgo y urgencia.
+ **Proyecto académico grupal** desarrollado como parte del Proyecto Integrador de la materia Inteligencia Artificial de la carrera Ingeniería en Sistemas.
+
+Este repositorio se publica con fines de **portfolio personal**, con el objetivo de documentar y mostrar mi aporte técnico en el desarrollo del sistema.
 
 ---
 
-## Características principales
+##  Descripción
 
-### Base de conocimiento en Neo4j
-- Representación con **FrameClass**, **FrameInstance**, **Slots**, **Measurement** y **SLOT_VALUE**.
-- Enfermedades, síntomas, factores personales y antecedentes clínicos.
-- Activación automática de reglas diagnósticas:
-  - **Gripe**
-  - **COVID-19**
-  - **Neumonía**
-- Cálculo de:
-  - Enfermedad sugerida  
-  - Nivel de riesgo  
-  - Prioridad de atención  
-  - Acción recomendada  
+DiagnoIA es un **asistente clínico inteligente** orientado a la evaluación preliminar de pacientes, combinando:
 
-### Motor de Reglas  
-Incluye reglas con múltiples condiciones (temperatura, tos, tabaquismo, edad, vacunación) usando pesos y score acumulado para activar diagnósticos.
+- una base de conocimiento clínica modelada como **grafo semántico en Neo4j**,
+- un **motor de reglas clínicas con scoring acumulado**,
+- una interfaz de consulta en lenguaje natural,
+- y un **modelo de lenguaje local (LLM)** para generar respuestas clínicas claras.
 
-### Interfaz Streamlit  
-Permite:
-- Consultar el grafo clínico mediante lenguaje natural.
-- Preguntar por síntomas, patologías, riesgo y prioridad.
-- Ver **todos los pacientes ordenados por prioridad clínica** (Urgente → Moderada → Baja).
-- Crear pacientes (opcional, si se activa el módulo).
-- Chat integrado con memoria por sesión.
+El sistema permite analizar síntomas, estimar riesgo y prioridad de atención, y sugerir acciones clínicas preliminares.
 
-### LLM local (Ollama)
-Usa **llama3.2:3b** (modelo liviano que no rompe RAM) para resumir, interpretar y devolver texto clínico.
+---
+
+## Arquitectura general
+
+El sistema está compuesto por los siguientes módulos:
+
+- **Base de conocimiento (Neo4j)**  
+  Modelada mediante:
+  - FrameClass  
+  - FrameInstance  
+  - Slot  
+  - Measurement  
+  - SLOT_VALUE  
+
+  Representa pacientes, síntomas, factores personales, diagnósticos y reglas clínicas.
+
+- **Motor de reglas clínicas**  
+  Evalúa múltiples condiciones (síntomas, mediciones y factores personales) utilizando pesos y score acumulado para:
+  - sugerir enfermedad,
+  - estimar nivel de riesgo,
+  - definir prioridad de atención,
+  - recomendar acciones.
+
+- **Modelo de lenguaje local (Ollama)**  
+  Utilizado para interpretar preguntas en lenguaje natural y generar respuestas clínicas no técnicas.  
+  El modelo corre de forma local, sin enviar datos sensibles a servicios externos.
+
+- **Interfaz de usuario (CLI / Streamlit)**  
+  Permite consultar pacientes, síntomas y diagnósticos, y visualizar prioridades clínicas.
+
+---
+
+##  Funcionalidades principales
+
+- Consulta de pacientes mediante lenguaje natural.
+- Listado de pacientes nuevos.
+- Identificación de pacientes con riesgo alto o prioridad urgente.
+- Consulta de síntomas, mediciones y factores personales.
+- Diagnóstico preliminar con:
+  - enfermedad sugerida,
+  - nivel de riesgo,
+  - prioridad de atención,
+  - acciones recomendadas.
+- Ordenamiento de pacientes por prioridad clínica.
 
 ---
 
 ## Tecnologías utilizadas
 
-- **Python 3.8+**
-- **Streamlit**
-- **Neo4j AuraDB**
-- **Cypher**
-- **Ollama (llama3.2:3b)**
-- **LangChain Community**
+- Python  
+- Neo4j AuraDB  
+- Cypher  
+- LangChain (community)  
+- Ollama (LLM local – llama3.2:3b)  
+- Streamlit  
 
 ---
 
-## Instalación
+##  Rol y aporte personal
 
-### 1. Clonar el repositorio
-```bash
-git clone https://github.com/valentina-lencioni/diagnoia.git
-cd diagnoia
+- Diseño del modelo clínico en Neo4j.
+- Implementación del motor de reglas clínicas.
+- Integración con LangChain y modelo de lenguaje local.
+- Desarrollo de la lógica de consulta y razonamiento clínico.
+- Diseño del flujo conversacional del asistente clínico.
+
+---
+
+##  Nota
+
+Este sistema **no reemplaza el diagnóstico médico profesional**.  
+Se trata de un proyecto académico orientado a la experimentación y al aprendizaje.
